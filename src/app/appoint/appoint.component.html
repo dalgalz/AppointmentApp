@@ -1,0 +1,36 @@
+<div>
+	<a href="" ng-click="logout($event)">Logout</a>
+</div>
+<div>
+	<h2>Doctor's Appointment</h2>
+	<div id="search">
+	<form (submit)="search($event)">
+		<input type="text" name="search" name='searchTerm' [(ngModel)]='searchTerm'>
+		<input type="submit" name="search" value="Search">
+	</form>
+	</div>
+	<br>
+	<table id="appointTable">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Time</th>
+				<th>Patient Name</th>
+				<th>Complain</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor='let appoint of appointments'>
+				<td>{{ appoint.appointDateTime | date : 'longDate' }}</td>
+				<td>{{ appoint.appointDateTime | date : 'shortTime' }}</td>
+				<td>{{ appoint.user.firstname }} {{ appoint.user.lastname }}</td>
+				<td>{{ appoint.complain }}</td>
+				<td><button *ngIf='appoint.isOwnedByUser && appoint.isMoreThanOneDayEarly' (click)="deleteAppoint(appoint)">Cancel</button></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div>
+	<button [routerLink]="['/create']"> Add New Appointment</button>
+</div>

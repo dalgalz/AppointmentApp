@@ -1,0 +1,56 @@
+<fieldset>
+
+<h3>Your Name: </h3>
+  <form (submit)="onLogin($event)" #loginForm='ngForm'>
+  	<p *ngIf='error' class='error'>{{ error.error }}</p>
+    <p>Username</p>
+    <input type="text" name="user.username" [(ngModel)]='user.username' required>
+    <p>Password</p>
+    <input type="password" name="user.password" [(ngModel)]='user.password' required>
+    <br />
+    <input type="submit" name="submit" value="Log In" [disabled]='!loginForm.valid'>
+  </form>
+
+</fieldset>
+
+<fieldset>
+
+<h3>Register: </h3>
+  <form (submit)='register($event)' #regForm='ngForm' >
+        <p class='regisFields'>Username</p>
+        <div class='error' *ngIf='username.errors'>
+            <p *ngIf='username.errors.required'>(*Required)</p>
+            <p *ngIf='username.errors.minlength'>Needs to be at least 3 Characters.</p>
+        </div>
+        <input type="text" name="user.username" [(ngModel)]="user.username" #username='ngModel' required minlength='3' />
+        <p class='regisFields'>First name</p>
+        	<div class='error' *ngIf='firstname.errors'>
+            <p *ngIf='firstname.errors.required'>(*Required)</p>
+            <p *ngIf='firstname.errors.minlength'>*Needs to be at least 3 Characters.</p>
+        </div>
+        <input type="text" name="user.firstname" [(ngModel)]="user.firstname" #firstname='ngModel' required minlength='3' />
+        <p class='regisFields'>Last name</p>
+        	<div class='error' *ngIf='lastname.errors'>
+            <p *ngIf='lastname.errors.required'>(*Required)</p>
+            <p *ngIf='lastname.errors.minlength'>*Needs to be at least 3 Characters.</p>
+        </div>
+        <input type="text" name="user.lastname" [(ngModel)]="user.lastname" #lastname='ngModel' required minlength='3' />
+        <p class='regisFields'>Password</p>
+        <div class='error' *ngIf='pw.errors'>
+            <p *ngIf='pw.errors.required'>(*Required)</p>
+            <p *ngIf='pw.errors.minlength'>*Needs to be at least 8 Characters.</p>
+            <p *ngIf='pw.errors.pattern'>*Please include a capital letter, number and symbol.</p>
+        </div>
+        <input type="password" name="password" [(ngModel)]="password" #pw='ngModel' required minlength='8' pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d#@$!%*?&]{8,32}'/>
+        <p class='regisFields'>Confirm Password</p>
+        <div class='error' *ngIf='confirm.errors || confirm_password != password'>
+            <p *ngIf='confirm.errors && confirm.errors.required'>(*Required)</p>
+            <p *ngIf='confirm.errors && confirm.errors.minlength'>*Needs to be at least 3 Characters.</p>
+            <p *ngIf='confirm_password != password'>*Needs to match.</p>
+        </div>
+        <input type="password" name="confirm_password" [(ngModel)]="confirm_password" #confirm='ngModel' required />
+        <br />
+        <input type='submit' value="Register" [disabled]='!regForm.form.valid || confirm_password != password'/>
+    </form>
+
+</fieldset>
